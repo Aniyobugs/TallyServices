@@ -43,7 +43,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-[80vh] flex items-center justify-center pt-32 pb-20 overflow-hidden bg-background">
+    <section ref={containerRef} className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden bg-black">
       {/* Abstract Background / Spotlight Effect */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px] mix-blend-screen animate-pulse" />

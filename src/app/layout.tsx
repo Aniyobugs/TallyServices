@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Your trusted partner for Tally Prime software sales, support, customization, and cloud hosting. Empowering businesses with efficient accounting solutions.",
 };
 
+import { FloatingGlows } from "@/components/FloatingGlows";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className="bg-black">
+        <FloatingGlows />
+        {children}
+      </body>
     </html>
   );
 }

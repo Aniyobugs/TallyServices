@@ -34,8 +34,10 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-24 bg-secondary/20">
-      <div className="container mx-auto px-4">
+    <section id="services" className="py-24 bg-black relative">
+      {/* Decorative Glow */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
