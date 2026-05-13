@@ -1,10 +1,17 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { notFound } from "next/navigation";
-import { Laptop, Settings, Server, HeadphonesIcon, GraduationCap, Link2 } from "lucide-react";
+import { Laptop, Settings, Server, HeadphonesIcon, GraduationCap } from "lucide-react";
 import React from "react";
 
-const serviceData: Record<string, any> = {
+type ServiceDetail = {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  features: string[];
+};
+
+const serviceData: Record<string, ServiceDetail> = {
   "tally-prime": {
     title: "Tally Prime Silver & Gold",
     description: "Authorized partner for Tally Prime Silver (Single User) and Gold (Multi-User) licenses. We handle installation, data migration, and initial setup to get your business running instantly.",
@@ -37,8 +44,13 @@ const serviceData: Record<string, any> = {
   }
 };
 
-export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
-  const service = serviceData[params.slug];
+export default async function ServiceDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const service = serviceData[slug];
 
   if (!service) {
     notFound();

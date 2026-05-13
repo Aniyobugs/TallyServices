@@ -1,70 +1,87 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { DirectionAwareButton, Magnetic } from "./InteractiveButton";
 
 export function Footer() {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Asia/Kolkata",
+      timeZoneName: "short",
+    });
+
+    const updateTime = () => setTime(formatter.format(new Date()));
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <footer className="bg-black pt-16 pb-8 border-t border-white/10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/10 to-transparent pointer-events-none" />
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">
-              TallyPrime Solutions
-            </h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Your premier destination for cutting-edge solutions in Accounting, Inventory, and Statutory automation exclusively tailored for Tally Prime.
-            </p>
+    <footer className="relative bg-white px-5 pb-8 pt-8 md:pb-10">
+      <div className="mx-auto max-w-6xl rounded-[56px] bg-[#ff4d00] p-6 text-white shadow-[0_44px_120px_rgba(255,77,0,0.26)] md:p-10 lg:p-14">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-4xl">
+            <p className="text-sm font-black uppercase text-white/72">Final approach</p>
+            <h2 className="mt-5 text-5xl font-black uppercase leading-[0.84] sm:text-7xl lg:text-[7rem]">
+              Make Tally
+              <span className="block text-black">feel inevitable.</span>
+            </h2>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4 text-lg text-white">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
-              <li><Link href="#products" className="hover:text-white transition-colors">Products</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-lg text-white">Services</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/services/tally-prime" className="hover:text-white transition-colors">Tally Prime Silver & Gold</Link></li>
-              <li><Link href="/services/tally-customization" className="hover:text-white transition-colors">Tally Customization</Link></li>
-              <li><Link href="/services/tally-on-cloud" className="hover:text-white transition-colors">Tally on Cloud</Link></li>
-              <li><Link href="/services/tss-renewal" className="hover:text-white transition-colors">TSS Renewal</Link></li>
-              <li><Link href="/services/training" className="hover:text-white transition-colors">Corporate Training</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4 text-lg text-white">Contact Us</h4>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li className="flex gap-3">
-                <MapPin className="shrink-0 text-blue-400" size={18} />
-                <span>123 Tech Park, Business District, Metro City, 100001</span>
-              </li>
-              <li className="flex gap-3 items-center">
-                <Phone className="shrink-0 text-blue-400" size={18} />
-                <a href="tel:+919876543210" className="hover:text-white transition-colors">+91 98765 43210</a>
-              </li>
-              <li className="flex gap-3 items-center">
-                <Mail className="shrink-0 text-blue-400" size={18} />
-                <a href="mailto:info@tallyprimesolutions.com" className="hover:text-white transition-colors">info@tallyprimesolutions.com</a>
-              </li>
-            </ul>
-          </div>
-
+          <DirectionAwareButton
+            className="h-16 w-full bg-black px-7 text-base font-black uppercase text-white transition-colors group-hover:text-black sm:w-fit"
+            fillClassName="bg-white"
+            type="button"
+          >
+            Start a project
+            <ArrowUpRight size={20} strokeWidth={2.3} />
+          </DirectionAwareButton>
         </div>
-        
-        <div className="pt-8 border-t border-white/10 text-center text-sm text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} TallyPrime Solutions. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+
+        <div className="mt-12 grid gap-8 rounded-[40px] bg-white p-6 text-black md:grid-cols-4 md:p-8">
+          <div>
+            <p className="text-xs font-black uppercase text-black/45">Location</p>
+            <p className="mt-3 text-lg font-bold">Kollam, Kerala</p>
+            <p className="text-lg font-bold">India</p>
+            <p className="mt-3 text-sm font-semibold text-black/45">{time || "IST"}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-black uppercase text-black/45">Social</p>
+            <div className="mt-3 flex flex-col gap-2 text-lg font-bold">
+              <Magnetic>
+                <Link href="#">LinkedIn</Link>
+              </Magnetic>
+              <Magnetic>
+                <Link href="#">Instagram</Link>
+              </Magnetic>
+              <Magnetic>
+                <Link href="#">Twitter</Link>
+              </Magnetic>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-black uppercase text-black/45">Contact</p>
+            <div className="mt-3 flex flex-col gap-2 text-lg font-bold">
+              <a href="mailto:hello@tallyprime.com">hello@tallyprime.com</a>
+              <a href="tel:+919876543210">+91 98765 43210</a>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-between gap-6 md:items-end md:text-right">
+            <p className="text-sm font-semibold text-black/55">
+              Design-led Tally implementations for teams that want speed, clarity, and fewer manual rituals.
+            </p>
+            <p className="text-xs font-black uppercase text-black/45">
+              Copyright {new Date().getFullYear()} Tally Prime Solutions
+            </p>
           </div>
         </div>
       </div>

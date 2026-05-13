@@ -2,70 +2,73 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { DirectionAwareButton } from "./InteractiveButton";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 bg-black relative">
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 rounded-[2rem] overflow-hidden backdrop-blur-xl">
-          <div className="grid md:grid-cols-2">
-            <div className="p-12 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Let's Engineer Your Growth</h2>
-              <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-                Experience the next generation of Tally services. Our team is ready to architect a solution that defies your expectations.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 text-white">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-                    <Send size={18} className="text-blue-400" />
-                  </div>
-                  <span className="font-medium">Free Consultation</span>
-                </div>
-                <div className="flex items-center gap-4 text-white">
-                  <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                    <Send size={18} className="text-purple-400" />
-                  </div>
-                  <span className="font-medium">Technical Audit</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-12 bg-white/[0.02] border-l border-white/5">
-              <form className="space-y-6">
-                <div>
-                  <input 
-                    type="text" 
-                    placeholder="Your Name" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
-                  />
-                </div>
-                <div>
-                  <input 
-                    type="email" 
-                    placeholder="Email Address" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
-                  />
-                </div>
-                <div>
-                  <textarea 
-                    rows={4} 
-                    placeholder="Your Requirements" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-blue-500/50 transition-all resize-none"
-                  ></textarea>
-                </div>
-                <motion.button 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-white text-black font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-                >
-                  Get Started Now
-                </motion.button>
-              </form>
-            </div>
+    <section className="relative bg-white px-5 py-24 md:py-32" id="contact">
+      <motion.div
+        className="mx-auto grid max-w-6xl gap-10 rounded-[56px] bg-black p-6 text-white shadow-[0_44px_140px_rgba(0,0,0,0.22)] md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14"
+        initial={{ opacity: 0, scale: 0.9, y: 70 }}
+        transition={{ type: "spring", stiffness: 160, damping: 22 }}
+        viewport={{ once: true, margin: "-120px" }}
+        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      >
+        <div className="flex min-h-[440px] flex-col justify-between rounded-[42px] bg-[#ff4d00] p-7 text-white md:p-9">
+          <div>
+            <p className="text-sm font-black uppercase">Connect</p>
+            <h2 className="mt-5 text-5xl font-black uppercase leading-[0.86] sm:text-7xl">
+              Build the next desk.
+            </h2>
           </div>
+          <p className="max-w-sm text-lg font-bold leading-relaxed text-white/80">
+            Tell us what your accounting team is trying to make faster, safer, or simply less exhausting.
+          </p>
         </div>
-      </div>
+
+        <form className="flex flex-col justify-between gap-8 py-2 md:py-4">
+          <div className="grid gap-5">
+            <label className="grid gap-3">
+              <span className="text-sm font-black uppercase text-white/48">Name</span>
+              <input
+                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                placeholder="John Doe"
+                required
+                type="text"
+              />
+            </label>
+
+            <label className="grid gap-3">
+              <span className="text-sm font-black uppercase text-white/48">Email</span>
+              <input
+                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                placeholder="john@company.com"
+                required
+                type="email"
+              />
+            </label>
+
+            <label className="grid gap-3">
+              <span className="text-sm font-black uppercase text-white/48">Project</span>
+              <textarea
+                className="min-h-[170px] resize-none rounded-[32px] bg-white/10 px-5 py-5 text-xl font-bold leading-relaxed text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                placeholder="Cloud setup, reports, customization, integrations..."
+                required
+              />
+            </label>
+          </div>
+
+          <DirectionAwareButton
+            className="h-16 w-full bg-white px-7 text-base font-black uppercase text-black transition-colors group-hover:text-white md:w-fit"
+            fillClassName="bg-[#ff4d00]"
+            type="button"
+          >
+            Send brief
+            <ArrowUpRight size={20} strokeWidth={2.4} />
+          </DirectionAwareButton>
+        </form>
+      </motion.div>
     </section>
   );
 }

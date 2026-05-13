@@ -1,23 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import CustomCursor from "@/components/CustomCursor";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
-  title: "Tally Prime Solutions | Certified Tally Partner",
-  description: "Your trusted partner for Tally Prime software sales, support, customization, and cloud hosting. Empowering businesses with efficient accounting solutions.",
+  title: "Tally Prime Solutions1",
+  description:
+    "A premium design-led studio for Tally Prime implementations, cloud systems, customization, and operating workflows.",
 };
-
-import { FloatingGlows } from "@/components/FloatingGlows";
 
 export default function RootLayout({
   children,
@@ -25,10 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-black">
-        <FloatingGlows />
-        {children}
+    <html lang="en">
+      <body className="bg-white text-black font-sans antialiased selection:bg-[#ff4d00] selection:text-white">
+        <CustomCursor />
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

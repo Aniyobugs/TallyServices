@@ -14,7 +14,7 @@ export default function AboutPage() {
             Welcome to TallyPrime Solutions, your dedicated partner in financial technology and business management. We are an authorized Tally Partner with over 15 years of deep expertise in deploying, customizing, and scaling Tally solutions for businesses of all sizes.
           </p>
           <p>
-            Our mission is simple: to provide a seamless, secure, and lightning-fast "anti-gravity" accounting experience. We believe that software should empower your growth, not weigh you down with technical debt and performance bottlenecks.
+            Our mission is simple: to provide a seamless, secure, and lightning-fast anti-gravity accounting experience. We believe that software should empower your growth, not weigh you down with technical debt and performance bottlenecks.
           </p>
           <p>
             Whether you need custom module integration, cloud hosting with 99.9% uptime, or hands-on corporate training, our team of seasoned developers and chartered accountants is here to engineer the perfect solution for your workflow.

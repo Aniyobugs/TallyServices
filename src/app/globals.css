@@ -11,6 +11,8 @@ body {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #ffffff;
+  color: #000000;
 }
 
 * {
@@ -24,16 +26,10 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 @layer base {
   .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
+    --font-heading: "Inter", "Geist", Arial, sans-serif;
+    --font-sans: "Inter", "Geist", Arial, sans-serif;
   }
   :root {
     --background: oklch(1 0 0);
@@ -110,6 +106,43 @@ a {
     color: var(--foreground);
   }
   html {
-    font-family: var(--font-sans);
+    background: #ffffff;
+    font-family: "Inter", "Geist", Arial, sans-serif;
+    letter-spacing: 0;
+  }
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+}
+
+.perspective-stage {
+  perspective: 1800px;
+}
+
+.perspective-deep {
+  perspective: 2400px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.soft-plane {
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.elastic-section {
+  border-radius: 56px 56px 0 0;
+  margin-top: -56px;
+}
+
+@media (max-width: 768px) {
+  .elastic-section {
+    border-radius: 40px 40px 0 0;
+    margin-top: -40px;
   }
 }
