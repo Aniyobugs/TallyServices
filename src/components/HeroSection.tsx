@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight, Database, Layers, RadioTower } from "lucide-react";
-import { DirectionAwareButton } from "./InteractiveButton";
+import { DirectionAwareButton, Magnetic } from "./InteractiveButton";
 
 function DashboardMockup() {
   return (
@@ -159,19 +159,19 @@ export function HeroSection() {
 
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-8 z-30 flex flex-wrap items-center justify-center gap-3 px-4"
+            className="absolute bottom-12 z-30 flex flex-wrap items-center justify-center gap-3 px-4 sm:bottom-16"
             initial={{ opacity: 0, y: 24 }}
             transition={{ delay: 0.75, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             <DirectionAwareButton
-              className="h-14 bg-black px-6 text-sm font-black uppercase text-white transition-colors duration-500 ease-out hover:text-black"
+              className="h-14 bg-black px-8 text-sm font-black uppercase text-white transition-colors duration-500 ease-out hover:text-black"
               fillClassName="bg-white"
             >
               Design my stack
               <ArrowUpRight size={18} strokeWidth={2.4} />
             </DirectionAwareButton>
             <DirectionAwareButton
-              className="h-14 bg-white px-6 text-sm font-black uppercase text-black transition-colors duration-500 ease-out hover:text-white"
+              className="h-14 bg-white px-8 text-sm font-black uppercase text-black transition-colors duration-500 ease-out hover:text-white"
               fillClassName="bg-black"
             >
               View systems

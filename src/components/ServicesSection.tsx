@@ -26,7 +26,7 @@ const stories: Array<{
     metric: "01",
     body: "Silver, Gold, and multi-user rollouts are mapped to real teams, not generic license bundles.",
     icon: Boxes,
-    tone: "bg-black text-white",
+    tone: "bg-[#111] border border-white/10 text-white",
   },
   {
     title: "Cloud Tally that feels local.",
@@ -50,7 +50,7 @@ const stories: Array<{
     metric: "ERP",
     body: "CRM, ecommerce, inventory, and operational data streams are connected with clear failure paths.",
     icon: Cable,
-    tone: "bg-black text-white",
+    tone: "bg-[#111] border border-white/10 text-white",
   },
   {
     title: "Security as a working habit.",
@@ -111,103 +111,112 @@ function StoryCard({
 
       <div>
         <p className="mb-5 text-sm font-black uppercase opacity-60">{story.eyebrow}</p>
-        <h3 className="text-4xl font-black uppercase leading-[0.9] md:text-5xl">{story.title}</h3>
+        <h3 className="break-words text-4xl font-black uppercase leading-[0.9] md:text-5xl">{story.title}</h3>
         <p className="mt-7 max-w-md text-lg font-semibold leading-relaxed opacity-70">{story.body}</p>
       </div>
     </motion.article>
   );
 }
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [pinPhase, setPinPhase] = useState<"before" | "during" | "after">("before");
-  const [showIntro, setShowIntro] = useState(true);
-  const [scrollDistance, setScrollDistance] = useState(2400);
-  const shouldReduceMotion = useReducedMotion();
-
-  useLayoutEffect(() => {
-    const measureTrack = () => {
-      if (!stageRef.current || !trackRef.current) {
-        return;
-      }
-
-      const viewportWidth = stageRef.current.clientWidth;
-      const trackWidth = trackRef.current.scrollWidth;
-      const distance = Math.max(trackWidth - viewportWidth + viewportWidth * 0.72, viewportWidth * 1.6);
-      setScrollDistance(distance);
-    };
-
-    measureTrack();
-    window.addEventListener("resize", measureTrack);
-    return () => window.removeEventListener("resize", measureTrack);
-  }, []);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const nextPhase = latest <= 0 ? "before" : latest >= 1 ? "after" : "during";
-    setPinPhase((current) => (current === nextPhase ? current : nextPhase));
-    setShowIntro((current) => {
-      const nextVisible = latest < 0.16;
-      return current === nextVisible ? current : nextVisible;
-    });
-  });
+  useGSAP(() => {
+    if (!stageRef.current || !trackRef.current) return;
 
-  const rawX = useTransform(scrollYProgress, [0.06, 0.92], [0, shouldReduceMotion ? 0 : -scrollDistance]);
-  const x = useSpring(rawX, { stiffness: 95, damping: 24, mass: 0.45 });
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.06, 0.14, 0.2], [1, 1, 0.08, 0]);
-  const headerY = useTransform(scrollYProgress, [0, 0.12, 0.2], [0, -46, -120]);
-  const progressWidth = useTransform(scrollYProgress, [0.06, 0.92], ["0%", "100%"]);
+    const getScrollDistance = () => {
+      const trackWidth = trackRef.current!.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      // Scroll exactly the width of the track minus viewport, plus a little padding to feel nice
+      return trackWidth - viewportWidth;
+    };
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        pin: stageRef.current,
+        start: "top top",
+        end: () => `+=${getScrollDistance()}`,
+        scrub: 1, // Smooth scrubbing
+        invalidateOnRefresh: true, // Recalculate on resize
+      },
+    });
+
+    // 1. Move track horizontally
+    tl.to(
+      trackRef.current,
+      {
+        x: () => -getScrollDistance(),
+        ease: "none",
+      },
+      0
+    );
+
+    // 2. Animate progress bar width
+    if (progressRef.current) {
+      tl.fromTo(
+        progressRef.current,
+        { width: "0%" },
+        { width: "100%", ease: "none" },
+        0
+      );
+    }
+
+    // 3. Fade out the header/intro early in the scroll
+    if (introRef.current) {
+      tl.to(
+        introRef.current,
+        {
+          opacity: 0,
+          y: -120,
+          ease: "power2.inOut",
+          duration: 0.15,
+        },
+        0
+      );
+    }
+  }, { scope: sectionRef });
 
   return (
-    <section
-      className="relative bg-black"
-      id="services"
-      ref={sectionRef}
-      style={{ height: `calc(100vh + ${scrollDistance}px)` }}
-    >
-      <div
-        className={`z-10 h-screen overflow-hidden ${
-          pinPhase === "during"
-            ? "fixed left-0 right-0 top-0"
-            : pinPhase === "after"
-              ? "absolute inset-x-0 bottom-0"
-              : "absolute inset-x-0 top-0"
-        }`}
-        ref={stageRef}
-      >
+    <section className="relative bg-black" id="services" ref={sectionRef}>
+      <div className="z-10 h-screen w-full overflow-hidden" ref={stageRef}>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,77,0,0.28),transparent_28%),linear-gradient(135deg,#000_0%,#090909_52%,#1a0b05_100%)]" />
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black to-transparent" />
 
-        <motion.div
-          className={`pointer-events-none absolute left-5 right-5 top-[clamp(6rem,12vh,8rem)] z-20 mx-auto flex max-w-6xl flex-col gap-4 ${
-            showIntro ? "visible" : "invisible"
-          }`}
-          style={{ opacity: headerOpacity, y: headerY }}
+        <div
+          ref={introRef}
+          className="pointer-events-none absolute left-5 right-5 top-[clamp(6rem,12vh,8rem)] z-20 mx-auto flex max-w-6xl flex-col gap-4"
         >
-          <motion.p
-            className="text-sm font-black uppercase text-[#ff4d00]"
-          >
+          <p className="text-sm font-black uppercase text-[#ff4d00]">
             Services / capabilities
-          </motion.p>
-          <motion.h2
-            className="max-w-5xl text-5xl font-black uppercase leading-[0.88] text-white sm:text-6xl lg:text-7xl"
-          >
+          </p>
+          <h2 className="max-w-5xl text-5xl font-black uppercase leading-[0.88] text-white sm:text-6xl lg:text-7xl">
             Scroll through the systems we build.
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
 
         <div className="perspective-deep absolute inset-x-0 bottom-[clamp(4.5rem,9vh,6.5rem)] z-10 w-full overflow-visible">
-          <motion.div
-            className="flex w-max items-end gap-8 pl-[7vw] pr-[72vw] md:gap-10 md:pl-[38vw] md:pr-[64vw]"
+          <div
+            className="flex w-max items-end gap-8 pl-[7vw] pr-[7vw] md:gap-10 md:pl-[38vw] md:pr-[10vw]"
             ref={trackRef}
-            style={{ x }}
           >
             {stories.map((story, index) => (
               <StoryCard
@@ -218,11 +227,11 @@ export function ServicesSection() {
                 total={stories.length}
               />
             ))}
-          </motion.div>
+          </div>
         </div>
 
         <div className="absolute bottom-8 left-5 right-5 z-20 mx-auto h-1 max-w-6xl overflow-hidden rounded-full bg-white/15">
-          <motion.div className="h-full rounded-full bg-[#ff4d00]" style={{ width: progressWidth }} />
+          <div ref={progressRef} className="h-full rounded-full bg-[#ff4d00] w-0" />
         </div>
       </div>
     </section>
