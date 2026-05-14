@@ -9,6 +9,7 @@ export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    // Only enable on devices with a precise pointer (like a mouse)
     const mediaQuery = window.matchMedia("(pointer: fine)");
     const syncPointerMode = () => setEnabled(mediaQuery.matches);
 
@@ -21,12 +22,18 @@ export default function CustomCursor() {
 
     const handleMouseOver = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      setIsHovering(
+      
+      // Detect if we are hovering over an interactive element
+      const isClickable =
         target.tagName.toLowerCase() === "a" ||
-          target.tagName.toLowerCase() === "button" ||
-          Boolean(target.closest("a")) ||
-          Boolean(target.closest("button")),
-      );
+        target.tagName.toLowerCase() === "button" ||
+        target.tagName.toLowerCase() === "input" ||
+        target.tagName.toLowerCase() === "textarea" ||
+        Boolean(target.closest("a")) ||
+        Boolean(target.closest("button")) ||
+        window.getComputedStyle(target).cursor === "pointer";
+        
+      setIsHovering(isClickable);
     };
 
     window.addEventListener("mousemove", updateMousePosition);
@@ -45,24 +52,37 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* Hide the default system cursor globally when custom cursor is active */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (pointer: fine) {
+          body, a, button, input, textarea, select, [role="button"] {
+            cursor: none !important;
+          }
+        }
+      `}} />
+      
+      {/* Outer Hollow Ring - lags behind slightly for organic feel */}
       <motion.div
         animate={{
-          opacity: isHovering ? 0.22 : 0.14,
-          scale: isHovering ? 1.8 : 1,
-          x: mousePosition.x - 24,
-          y: mousePosition.y - 24,
+          scale: isHovering ? 1.6 : 1,
+          opacity: isHovering ? 0 : 1,
+          x: mousePosition.x - 20,
+          y: mousePosition.y - 20,
         }}
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-12 w-12 rounded-full border border-black/30 bg-[#ff4d00]"
-        transition={{ type: "spring", stiffness: 170, damping: 18, mass: 0.2 }}
+        className="pointer-events-none fixed left-0 top-0 z-[10000] h-10 w-10 rounded-full border-[1.5px] border-[#ff4d00]/60"
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.15 }}
       />
+      
+      {/* Inner Solid Dot - follows exactly and expands on hover */}
       <motion.div
         animate={{
-          scale: isHovering ? 0.65 : 1,
+          scale: isHovering ? 4.5 : 1,
+          opacity: isHovering ? 0.35 : 1,
           x: mousePosition.x - 4,
           y: mousePosition.y - 4,
         }}
-        className="pointer-events-none fixed left-0 top-0 z-[101] h-2 w-2 rounded-full bg-black"
-        transition={{ type: "spring", stiffness: 260, damping: 16, mass: 0.14 }}
+        className="pointer-events-none fixed left-0 top-0 z-[10001] h-2 w-2 rounded-full bg-[#ff4d00]"
+        transition={{ type: "spring", stiffness: 450, damping: 25, mass: 0.05 }}
       />
     </>
   );

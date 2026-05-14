@@ -40,7 +40,7 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
 
 export function StatsSection() {
   return (
-    <section className="relative z-20 -mt-[42vh] bg-white px-5 pb-20 pt-12 md:-mt-[48vh] md:pb-28 md:pt-16">
+    <section className="relative z-20 bg-white px-5 pb-20 pt-12 md:pb-28 md:pt-16">
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <motion.div
           className="max-w-3xl"

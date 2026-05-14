@@ -3,6 +3,8 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader";
+import NoiseOverlay from "@/components/NoiseOverlay";
 
 export const metadata: Metadata = {
   title: "Tally Prime Solutions1",
@@ -18,6 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-black font-sans antialiased selection:bg-[#ff4d00] selection:text-white">
+        <NoiseOverlay />
+        <Preloader />
         <CustomCursor />
         <SmoothScroll>
           {children}
