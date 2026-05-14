@@ -130,7 +130,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 18 }}
               transition={{ duration: 0.7, delay: 0.12 }}
             >
-              Anti-gravity Tally studio
+              Tally studio
             </motion.p>
             <motion.h1
               animate={{ opacity: 1, y: 0 }}

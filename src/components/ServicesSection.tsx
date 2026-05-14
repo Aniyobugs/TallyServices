@@ -1,7 +1,15 @@
 "use client";
 
 import React, { ElementType, useLayoutEffect, useRef, useState } from "react";
-import { motion, MotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  MotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { Boxes, Cable, Cloud, LifeBuoy, ShieldCheck, Workflow } from "lucide-react";
 
 const stories: Array<{
@@ -112,20 +120,22 @@ function StoryCard({
 
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [scrollDistance, setScrollDistance] = useState(1200);
+  const [pinPhase, setPinPhase] = useState<"before" | "during" | "after">("before");
+  const [showIntro, setShowIntro] = useState(true);
+  const [scrollDistance, setScrollDistance] = useState(2400);
   const shouldReduceMotion = useReducedMotion();
 
   useLayoutEffect(() => {
     const measureTrack = () => {
-      if (!stickyRef.current || !trackRef.current) {
+      if (!stageRef.current || !trackRef.current) {
         return;
       }
 
-      const viewportWidth = stickyRef.current.clientWidth;
+      const viewportWidth = stageRef.current.clientWidth;
       const trackWidth = trackRef.current.scrollWidth;
-      const distance = Math.max(trackWidth - viewportWidth + viewportWidth * 0.18, viewportWidth * 0.8);
+      const distance = Math.max(trackWidth - viewportWidth + viewportWidth * 0.72, viewportWidth * 1.6);
       setScrollDistance(distance);
     };
 
@@ -138,11 +148,21 @@ export function ServicesSection() {
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  const rawX = useTransform(scrollYProgress, [0.04, 0.94], [0, shouldReduceMotion ? 0 : -scrollDistance]);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const nextPhase = latest <= 0 ? "before" : latest >= 1 ? "after" : "during";
+    setPinPhase((current) => (current === nextPhase ? current : nextPhase));
+    setShowIntro((current) => {
+      const nextVisible = latest < 0.16;
+      return current === nextVisible ? current : nextVisible;
+    });
+  });
+
+  const rawX = useTransform(scrollYProgress, [0.06, 0.92], [0, shouldReduceMotion ? 0 : -scrollDistance]);
   const x = useSpring(rawX, { stiffness: 95, damping: 24, mass: 0.45 });
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.16, 0.82, 1], [1, 1, 0.9, 0]);
-  const headerY = useTransform(scrollYProgress, [0, 0.22, 1], [0, -34, -72]);
-  const progressWidth = useTransform(scrollYProgress, [0.05, 0.94], ["0%", "100%"]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.06, 0.14, 0.2], [1, 1, 0.08, 0]);
+  const headerY = useTransform(scrollYProgress, [0, 0.12, 0.2], [0, -46, -120]);
+  const progressWidth = useTransform(scrollYProgress, [0.06, 0.92], ["0%", "100%"]);
 
   return (
     <section
@@ -151,13 +171,24 @@ export function ServicesSection() {
       ref={sectionRef}
       style={{ height: `calc(100vh + ${scrollDistance}px)` }}
     >
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden" ref={stickyRef}>
+      <div
+        className={`z-10 h-screen overflow-hidden ${
+          pinPhase === "during"
+            ? "fixed left-0 right-0 top-0"
+            : pinPhase === "after"
+              ? "absolute inset-x-0 bottom-0"
+              : "absolute inset-x-0 top-0"
+        }`}
+        ref={stageRef}
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(255,77,0,0.28),transparent_28%),linear-gradient(135deg,#000_0%,#090909_52%,#1a0b05_100%)]" />
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black to-transparent" />
 
         <motion.div
-          className="pointer-events-none absolute left-5 right-5 top-24 z-20 mx-auto flex max-w-6xl flex-col gap-4 md:top-28"
+          className={`pointer-events-none absolute left-5 right-5 top-[clamp(6rem,12vh,8rem)] z-20 mx-auto flex max-w-6xl flex-col gap-4 ${
+            showIntro ? "visible" : "invisible"
+          }`}
           style={{ opacity: headerOpacity, y: headerY }}
         >
           <motion.p
@@ -172,9 +203,9 @@ export function ServicesSection() {
           </motion.h2>
         </motion.div>
 
-        <div className="perspective-deep relative z-10 mt-44 w-full overflow-visible md:mt-52">
+        <div className="perspective-deep absolute inset-x-0 bottom-[clamp(4.5rem,9vh,6.5rem)] z-10 w-full overflow-visible">
           <motion.div
-            className="flex w-max gap-8 pl-[7vw] pr-[24vw] md:gap-10 md:pl-[44vw] md:pr-[28vw]"
+            className="flex w-max items-end gap-8 pl-[7vw] pr-[72vw] md:gap-10 md:pl-[38vw] md:pr-[64vw]"
             ref={trackRef}
             style={{ x }}
           >
