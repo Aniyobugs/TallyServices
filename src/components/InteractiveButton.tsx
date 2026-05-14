@@ -90,7 +90,7 @@ export function DirectionAwareButton({
     >
       <span
         aria-hidden="true"
-        className={`absolute -z-10 -translate-x-1/2 -translate-y-1/2 scale-0 rounded-full transition-transform duration-500 ease-out group-hover:scale-100 ${fillClassName}`}
+        className={`absolute z-0 -translate-x-1/2 -translate-y-1/2 scale-0 rounded-full transition-transform duration-500 ease-out group-hover:scale-100 ${fillClassName}`}
         style={{ left: `${origin.x}%`, top: `${origin.y}%`, width: '300%', aspectRatio: '1' }}
       />
       <motion.span

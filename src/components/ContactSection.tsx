@@ -32,7 +32,7 @@ export function ContactSection() {
             <label className="grid gap-3">
               <span className="text-sm font-black uppercase text-white/48">Name</span>
               <input
-                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors duration-500 ease-out placeholder:text-white/30 focus:bg-white/16"
                 placeholder="John Doe"
                 required
                 type="text"
@@ -42,7 +42,7 @@ export function ContactSection() {
             <label className="grid gap-3">
               <span className="text-sm font-black uppercase text-white/48">Email</span>
               <input
-                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                className="h-16 rounded-[28px] bg-white/10 px-5 text-xl font-bold text-white outline-none transition-colors duration-500 ease-out placeholder:text-white/30 focus:bg-white/16"
                 placeholder="john@company.com"
                 required
                 type="email"
@@ -52,7 +52,7 @@ export function ContactSection() {
             <label className="grid gap-3">
               <span className="text-sm font-black uppercase text-white/48">Project</span>
               <textarea
-                className="min-h-[170px] resize-none rounded-[32px] bg-white/10 px-5 py-5 text-xl font-bold leading-relaxed text-white outline-none transition-colors placeholder:text-white/30 focus:bg-white/16"
+                className="min-h-[170px] resize-none rounded-[32px] bg-white/10 px-5 py-5 text-xl font-bold leading-relaxed text-white outline-none transition-colors duration-500 ease-out placeholder:text-white/30 focus:bg-white/16"
                 placeholder="Cloud setup, reports, customization, integrations..."
                 required
               />
@@ -60,7 +60,7 @@ export function ContactSection() {
           </div>
 
           <DirectionAwareButton
-            className="h-16 w-full bg-white px-7 text-base font-black uppercase text-black transition-colors group-hover:text-white md:w-fit"
+            className="h-16 w-full bg-white px-7 text-base font-black uppercase text-black transition-colors duration-500 ease-out hover:text-white md:w-fit"
             fillClassName="bg-[#ff4d00]"
             type="button"
           >

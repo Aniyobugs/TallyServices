@@ -67,7 +67,7 @@ export function FAQSection() {
               >
                 <DirectionAwareButton
                   aria-expanded={isOpen}
-                  className="w-full bg-white px-6 py-7 text-left text-black transition-colors group-hover:text-white md:px-8"
+                  className="w-full bg-white px-6 py-7 text-left text-black transition-colors duration-500 ease-out hover:text-white md:px-8"
                   fillClassName="bg-black"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >

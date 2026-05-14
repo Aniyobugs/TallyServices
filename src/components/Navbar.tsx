@@ -67,7 +67,7 @@ export function Navbar() {
 
           <DirectionAwareButton
             aria-label="Open menu"
-            className="h-11 px-4 text-sm font-bold uppercase text-black transition-colors group-hover:text-white"
+            className="h-11 px-4 text-sm font-bold uppercase text-black transition-colors duration-500 ease-out hover:text-white"
             fillClassName="bg-black"
             onClick={() => setMobileOpen(true)}
           >
@@ -101,7 +101,7 @@ export function Navbar() {
               <div className="flex justify-end">
                 <DirectionAwareButton
                   aria-label="Close menu"
-                  className="h-12 px-4 text-sm font-bold uppercase text-black transition-colors group-hover:text-white"
+                  className="h-12 px-4 text-sm font-bold uppercase text-black transition-colors duration-500 ease-out hover:text-white"
                   fillClassName="bg-black"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -124,7 +124,7 @@ export function Navbar() {
                   >
                     <Magnetic>
                       <Link
-                        className="group inline-flex items-center gap-4 text-5xl font-black uppercase leading-none text-black transition-colors hover:text-[#ff4d00] sm:text-7xl"
+                        className="group inline-flex items-center gap-4 text-5xl font-black uppercase leading-none text-black transition-colors duration-500 ease-out hover:text-[#ff4d00] sm:text-7xl"
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
                       >

@@ -35,7 +35,7 @@ export function Footer() {
           </div>
 
           <DirectionAwareButton
-            className="h-16 w-full bg-black px-7 text-base font-black uppercase text-white transition-colors group-hover:text-black sm:w-fit"
+            className="h-16 w-full bg-black px-7 text-base font-black uppercase text-white transition-colors duration-500 ease-out hover:text-black sm:w-fit"
             fillClassName="bg-white"
             type="button"
           >

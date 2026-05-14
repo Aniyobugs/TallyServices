@@ -164,14 +164,14 @@ export function HeroSection() {
             transition={{ delay: 0.75, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             <DirectionAwareButton
-              className="h-14 bg-black px-6 text-sm font-black uppercase text-white transition-colors group-hover:text-black"
+              className="h-14 bg-black px-6 text-sm font-black uppercase text-white transition-colors duration-500 ease-out hover:text-black"
               fillClassName="bg-white"
             >
               Design my stack
               <ArrowUpRight size={18} strokeWidth={2.4} />
             </DirectionAwareButton>
             <DirectionAwareButton
-              className="h-14 bg-white px-6 text-sm font-black uppercase text-black transition-colors group-hover:text-white"
+              className="h-14 bg-white px-6 text-sm font-black uppercase text-black transition-colors duration-500 ease-out hover:text-white"
               fillClassName="bg-black"
             >
               View systems
