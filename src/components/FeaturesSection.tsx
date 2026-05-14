@@ -29,28 +29,28 @@ const features: Array<{
     title: "Global access",
     description: "Branches, accountants, and owners share one disciplined cloud workspace.",
     icon: Globe2,
-    span: "md:col-span-2 md:row-span-2",
+    span: "md:col-span-3 md:row-span-2",
     tone: "bg-[#ff4d00] text-white",
   },
   {
     title: "Locked roles",
     description: "Permissions are clean, readable, and built for daily operations.",
     icon: LockKeyhole,
-    span: "md:col-span-2 md:row-span-1",
+    span: "md:col-span-3 md:row-span-1",
     tone: "bg-white text-black",
   },
   {
     title: "API choreography",
     description: "CRM, ERP, ecommerce, and inventory systems exchange data without handwork.",
     icon: Cpu,
-    span: "md:col-span-2 md:row-span-2",
+    span: "md:col-span-3 md:row-span-2",
     tone: "bg-black text-white",
   },
   {
     title: "Custom insight",
     description: "Reports surface the decisions your team makes every morning.",
     icon: ChartNoAxesCombined,
-    span: "md:col-span-4 md:row-span-1",
+    span: "md:col-span-3 md:row-span-2",
     tone: "bg-white text-black",
   },
 ];
@@ -93,9 +93,9 @@ function FeatureCard({
         <Icon size={42} strokeWidth={1.8} />
       </motion.div>
 
-      <div className="relative z-10 mt-auto max-w-[24rem]">
+      <div className="relative z-10 mt-auto w-full md:pr-8">
         <p className="mb-5 text-xs font-black uppercase opacity-55">0{index + 1}</p>
-        <h3 className="text-4xl font-black uppercase leading-[0.9] md:text-5xl">{feature.title}</h3>
+        <h3 className="break-words text-3xl font-black uppercase leading-[0.95] md:text-4xl lg:text-5xl">{feature.title}</h3>
         <p className="mt-5 text-base font-semibold leading-relaxed opacity-[0.68] md:text-lg">
           {feature.description}
         </p>

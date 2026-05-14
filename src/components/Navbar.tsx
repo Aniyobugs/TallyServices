@@ -9,8 +9,9 @@ import { DirectionAwareButton, Magnetic } from "./InteractiveButton";
 const menuItems = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "Studio", href: "/about" },
+  { label: "Analytics", href: "/#analytics" },
   { label: "Stories", href: "/#testimonials" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "Contact", href: "/#contact" },
 ];
 
